@@ -15,7 +15,7 @@ def process_text_file(input_file, output_file, output_dir):
     try:
         with open(input_file, 'r', encoding='utf-8') as file:
             content = file.read()
-        processed_content = ''.join(c.upper() if c.isalnum() or c.isspace() else "" for c in content)
+        processed_content = ''.join(c.upper() if c.isalpha() or c.isspace() else "" for c in content)
         output_path = os.path.join(output_dir, output_file)
         with open(output_path, 'w', encoding='utf-8') as file:
             file.write(processed_content)
