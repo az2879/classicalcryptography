@@ -1,1 +1,7 @@
-This is a secret message.
+This is a secret, highly confidential message. Do not share with anyone.
+
+Message start:
+
+Hello, World!
+
+Message over.

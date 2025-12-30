@@ -1,6 +1,18 @@
 import click
 import os
 
+def clean_text(text: str) -> str:
+    """
+    Process the input text by converting to uppercase and removing non-letter characters.
+
+    Args:
+        text (str): The raw input text.
+
+    Returns:
+        str: The cleaned text.
+    """
+    return ''.join(c.upper() if c.isalpha() or c.isspace() else "" for c in text)   
+
 @click.command()
 @click.argument('input-file')
 @click.option('--output-file', help='Output file name', default='processed_output.txt')
@@ -15,7 +27,7 @@ def process_text_file(input_file, output_file, output_dir):
     try:
         with open(input_file, 'r', encoding='utf-8') as file:
             content = file.read()
-        processed_content = ''.join(c.upper() if c.isalpha() or c.isspace() else "" for c in content)
+        processed_content = clean_text(content)
         output_path = os.path.join(output_dir, output_file)
         with open(output_path, 'w', encoding='utf-8') as file:
             file.write(processed_content)

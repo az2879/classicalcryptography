@@ -2,11 +2,12 @@
 Caesar Cipher Implementation
 
 This module implements encryption, decryption, and basic cryptanalysis
-for the classical Caesar cipher. Intended for educational use only.
+for the classical Caesar cipher.
 """
 
 import string
 from typing import Tuple, List
+from analysis.frequency import english_score
 
 ALPHABET = string.ascii_uppercase
 ALPHABET_SIZE = len(ALPHABET)
@@ -102,6 +103,27 @@ def frequency_attack(ciphertext: str, score_func) -> Tuple[int, str]:
             best_plaintext = candidate
 
     return best_shift, best_plaintext
+
+def ranked_candidates(ciphertext: str, top_n: int = 5) -> List[Tuple[int, str, float]]:
+    """
+    Return top-N candidate decryptions ranked by English score.
+
+    Args:
+        ciphertext (str): Encrypted text
+        top_n (int): Number of top results to return
+
+    Returns:
+        List of (shift, plaintext, score)
+    """
+    candidates = []
+
+    for shift in range(26):
+        plaintext = decrypt(ciphertext, shift)
+        score = english_score(plaintext)
+        candidates.append((shift, plaintext, score))
+
+    candidates.sort(key=lambda x: x[2], reverse=True)
+    return candidates[:top_n]
 
 
 # -----------------------------
